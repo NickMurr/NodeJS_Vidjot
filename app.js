@@ -13,13 +13,15 @@ app.set('view engine', 'handlebars');
 
 // Index Route
 app.get('/', (req, res) => {
-  console.log(req.name);
-  res.send(req.name);
+  const title = 'Welcome';
+  res.render('index', {
+    title: title,
+  });
 });
 
 // About Route
 app.get('/about', (req, res) => {
-  res.send('ABOUT1');
+  res.render('ABOUT');
 });
 
 
