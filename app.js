@@ -1,8 +1,17 @@
 const express = require('express');
-
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 
 const app = express();
+// Map global promise - get rid of warning
+mongoose.Promise = global.Promise;
+// Connect to mongoose
+mongoose.connect('mongodb://localhost/vidjot-dev', {
+
+})
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err));
+
 
 // Handlebars middleware
 app.engine('handlebars', exphbs({
@@ -15,7 +24,7 @@ app.set('view engine', 'handlebars');
 app.get('/', (req, res) => {
   const title = 'Welcome1';
   res.render('index', {
-    title: title,
+    title,
   });
 });
 
