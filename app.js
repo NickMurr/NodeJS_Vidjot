@@ -62,12 +62,20 @@ app.post('/ideas', (req, res) => {
 
   if (errors.length > 0) {
     res.render('ideas/add', {
-      errors: errors,
+      errors,
       title: req.body.title,
       details: req.body.details,
     });
   } else {
-    res.send('passed');
+    const newUser = {
+      title: req.body.title,
+      details: req.body.details,
+    };
+    new Idea(newUser)
+      .save()
+      .then((idea) => {
+        res.redirect('./ideas');
+      });
   }
 });
 
