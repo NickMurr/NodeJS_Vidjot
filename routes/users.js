@@ -2,12 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-
 const router = express.Router();
 
-// Load User Module
+// Load User Model
 require('../models/User');
-
 const User = mongoose.model('users');
 
 // User Login Route
@@ -20,14 +18,14 @@ router.get('/register', (req, res) => {
   res.render('users/register');
 });
 
-// Login Form Post
+// Login Form POST
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/ideas',
     failureRedirect: '/users/login',
-    failureflash: 'true',
+    failureFlash: true,
   })(req, res, next);
-})
+});
 
 // Register Form Post
 router.post('/register', (req, res) => {
@@ -38,7 +36,7 @@ router.post('/register', (req, res) => {
   }
 
   if (req.body.password.length < 4) {
-    errors.push({ text: 'Passwords must be at least 4 characters' });
+    errors.push({ text: 'Password must be at least 4 characters' });
   }
 
   if (errors.length > 0) {
